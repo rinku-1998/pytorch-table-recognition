@@ -1,0 +1,49 @@
+# 模型推論設定
+model:
+  device: cpu
+
+# 影像預處理
+preprocess:
+  resize_size: (1280, 960)
+
+# 修正紙張方向
+paper_direction:
+  model:
+    weight_path: weights/efficientnet_direction.pth
+    num_classes: 2
+
+# 修正紙張變形
+paper:
+  model:
+    weight_path: weights/unet_paper.pth
+    threshold: 0.7
+    num_classes: 2
+
+  build:
+    lower_percentage: 0.45
+    upper_percentage: 0.96
+    max_diagonal_diff: 30
+
+# 辨識表格線條
+table_line:
+  model:
+    weight_path: weights/unet_tableline.pth
+    threshold: 0.5
+    num_classes: 4
+
+  build:
+    min_row_height: 10
+    min_col_width: 10
+    min_row_len: 100
+    min_col_len: 50
+    max_merge_distance: 45
+    max_merge_parallel_diff: 10
+    ot_w_percentage: 0.8
+    ot_h_percentage: 0.8
+
+# 繪製結果
+draw:
+  row_color: (50, 168, 78)
+  col_color: (50, 125, 168)
+  cand_color: (225, 242, 65)
+  prof_color: (110, 139, 245)
